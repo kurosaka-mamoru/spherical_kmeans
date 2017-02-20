@@ -39,3 +39,8 @@ luac.out
 *.x86_64
 *.hex
 
+# Shared objects (inc. Windows DLLs)
+*.dll
+*.so
+*.so.*
+*.dylib
