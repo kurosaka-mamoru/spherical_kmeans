@@ -1,0 +1,4 @@
+/home/kurosaka/torch/install/lib/luarocks/rocks/spkmeans/scm-1/lua/spkmeans/spkmeans.lua
+/home/kurosaka/torch/install/lib/luarocks/rocks/spkmeans/scm-1/lua/spkmeans/use_niter.lua
+/home/kurosaka/torch/install/lib/luarocks/rocks/spkmeans/scm-1/lua/spkmeans/use_th.lua
+/home/kurosaka/torch/install/lib/luarocks/rocks/spkmeans/scm-1/lua/spkmeans/init.lua

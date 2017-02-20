@@ -1,4 +1,4 @@
-local spkmeans = {}
+--local spkmeans = {}
 
 function spkmeans.use_th(x, k, th, std)
     -- args
@@ -133,4 +133,4 @@ function spkmeans.use_niter(x, k, niter, std)
     return centroids
 end
 
-return spkmeans
+--return spkmeans
