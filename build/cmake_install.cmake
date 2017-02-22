@@ -34,7 +34,6 @@ ENDIF(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
   FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/luarocks/rocks/spkmeans/scm-1/lua/spkmeans" TYPE FILE FILES
-    "/home/kurosaka/spherical_kmeans/spkmeans.lua"
     "/home/kurosaka/spherical_kmeans/use_niter.lua"
     "/home/kurosaka/spherical_kmeans/use_th.lua"
     "/home/kurosaka/spherical_kmeans/init.lua"

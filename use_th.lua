@@ -41,8 +41,9 @@ function spkmeans.use_th(x, k, th, batch_size, std)
             -- update latent value
             local batch_t = x[{{i, lasti}, {}}]:t()
             local tmp = centroids * batch_t
-            local val_tmp, labels[{{i, lasti}}] = torch.max(tmp, 1)
+            local val_tmp, labels_tmp = torch.max(tmp, 1)
             val = val + torch.sum(val_tmp)
+            labels[{{i, lasti}}] = labels_tmp
         end
         
         -- update centroids
