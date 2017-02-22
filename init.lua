@@ -28,13 +28,12 @@ function spkmeans.use_th(x, k, th, batch_size, std)
     -- do iterations
     local labels = torch.Tensor(nsamples)
     for i = 1, max_iter do
-        xlua.progress(i, niter)
+        --xlua.progress(i, max_iter)
         
         local old_val = 0 or val
         
         -- process batch
         local val = 0
-        local labels = torch.Tensor()
         for i = 1, nsamples, batch_size do
             -- indices
             local lasti = math.min(i + batch_size - 1, nsamples)
@@ -51,8 +50,8 @@ function spkmeans.use_th(x, k, th, batch_size, std)
         -- update centroids
         local summation = torch.zeros(k, ndims)
         local S = torch.zeros(nsamples, k)
-        for i = 1, labels:size(2) do
-            S[i][labels[1][i]] = 1
+        for i = 1, labels:size(1) do
+            S[i][labels[i]] = 1
         end
         summation = torch.add(summation, S:t() * x)
         local counts = torch.sum(S, 1):squeeze()
@@ -70,6 +69,7 @@ function spkmeans.use_th(x, k, th, batch_size, std)
         centroids = torch.cdiv(centroids, torch.expand(norms, k, ndims))
         
         -- check termination condition
+        print(val)
         if val - old_val < th then
             break
         end
