@@ -1,11 +1,11 @@
-function spkmeans.use_th(x, k, th, std)
+function spkmeans.use_th(x, k, th, batch_size, std)
     -- args
     x = x or error('missing argument: '.. help)
     k = k or error('missing argument: '.. help)
-    --batch_size = batch_size or 1000
+    batch_size = batch_size or 10000
     std = std or 0.1
     
-    max_iter = 500
+    max_iter = 1000
     
     -- resize data and dims
     local nsamples = x:size(1)
@@ -24,16 +24,28 @@ function spkmeans.use_th(x, k, th, std)
     centroids = torch.cdiv(centroids, torch.expand(norms, k, ndims))
     
     -- do iterations
-    local x_t = x:t()
+    local labels = torch.Tensor(nsamples)
     for i = 1, max_iter do
         xlua.progress(i, niter)
+        
         local old_val = 0 or val
-        -- update latent value
-        local tmp = centroids * x_t
-        local val, labels = torch.max(tmp, 1)
+        
+        -- process batch
+        local val = 0
+        local labels = torch.Tensor()
+        for i = 1, nsamples, batch_size do
+            -- indices
+            local lasti = math.min(i + batch_size - 1, nsamples)
+            local m = lasti - i + 1
+            
+            -- update latent value
+            local batch_t = x[{{i, lasti}, {}}]:t()
+            local tmp = centroids * batch_t
+            local val_tmp, labels[{{i, lasti}}] = torch.max(tmp, 1)
+            val = val + torch.sum(val_tmp)
+        end
         
         -- update centroids
-        -- batch を使うバージョンに改良したい
         local summation = torch.zeros(k, ndims)
         local S = torch.zeros(nsamples, k)
         for i = 1, labels:size(2) do
@@ -41,8 +53,8 @@ function spkmeans.use_th(x, k, th, std)
         end
         summation = torch.add(summation, S:t() * x)
         local counts = torch.sum(S, 1):squeeze()
-        
         centroids = summation
+        
         -- update null cluster centroids
         for i = 1, k do
             if counts[i] == 0 then
@@ -55,7 +67,7 @@ function spkmeans.use_th(x, k, th, std)
         centroids = torch.cdiv(centroids, torch.expand(norms, k, ndims))
         
         -- check termination condition
-        if torch.sum(val) - old_val < th then
+        if val - old_val < th then
             break
         end
     end
