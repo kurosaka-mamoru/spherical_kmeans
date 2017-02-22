@@ -7,7 +7,7 @@ function spkmeans.use_th(x, k, th, batch_size, std)
     batch_size = batch_size or 10000
     std = std or 0.1
     
-    max_iter = 1000
+    max_iter = 500
     
     -- resize data and dims
     local nsamples = x:size(1)
@@ -69,8 +69,8 @@ function spkmeans.use_th(x, k, th, batch_size, std)
         centroids = torch.cdiv(centroids, torch.expand(norms, k, ndims))
         
         -- check termination condition
-        print(val)
-        if val - old_val < th then
+        print(val - old_val)
+        if (val - old_val < th) then
             break
         end
     end
