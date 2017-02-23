@@ -30,10 +30,9 @@ function spkmeans.use_th(x, k, th, batch_size, std)
     for i = 1, max_iter do
         --xlua.progress(i, max_iter)
         
-        local old_val = 0 or val
-        
+        local old_val = val or 0
         -- process batch
-        local val = 0
+        val = 0
         for i = 1, nsamples, batch_size do
             -- indices
             local lasti = math.min(i + batch_size - 1, nsamples)
@@ -69,7 +68,7 @@ function spkmeans.use_th(x, k, th, batch_size, std)
         centroids = torch.cdiv(centroids, torch.expand(norms, k, ndims))
         
         -- check termination condition
-        print(val - old_val)
+        print(i.. ':'.. (val - old_val))
         if (val - old_val < th) then
             break
         end
