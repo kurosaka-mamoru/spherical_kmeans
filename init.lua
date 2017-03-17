@@ -69,7 +69,7 @@ function spkmeans.use_th(x, k, th, batch_size, std)
         
         -- check termination condition
         print(i.. ':'.. (val - old_val))
-        if (val - old_val < th) then
+        if (val - old_val < th) and (val - old_val >= 0) then
             break
         end
     end
