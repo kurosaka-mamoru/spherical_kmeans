@@ -7,7 +7,7 @@ function spkmeans.use_th(x, k, th, batch_size, std)
     batch_size = batch_size or 10000
     std = std or 0.1
     
-    max_iter = 500
+    max_iter = 2000
     
     -- resize data and dims
     local nsamples = x:size(1)
