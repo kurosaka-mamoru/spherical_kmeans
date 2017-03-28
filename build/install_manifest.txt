@@ -1,1 +1,1 @@
-/home/kurosaka/torch/install/lib/luarocks/rocks/spkmeans/scm-1/lua/spkmeans/init.lua
+/mnt/toybox/kurosaka/torch/install/lib/luarocks/rocks/spkmeans/scm-1/lua/spkmeans/init.lua
